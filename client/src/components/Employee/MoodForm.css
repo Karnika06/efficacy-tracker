@@ -1,0 +1,80 @@
+/* For mood */
+
+.mood-img {
+    width: 65%;
+    margin-top: 10%;
+    border-radius: 10px;
+}
+
+.mood {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   cursor: pointer;
+    
+}
+
+.mood p {
+    margin: 10% 0;
+}
+
+.mood:hover{
+    background-color: #E5E7EB;
+    border-radius: 10px;
+    /* padding-top: 2%; */
+    transition: 1.5s all;
+}
+
+.mood-radio-button:checked + .mood
+{
+    border-radius: 10px;
+    background-color: #E5E7EB;
+    border-color: #BE185D;  
+  }
+
+/* For select reason */
+
+  .reasons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+.reason-container{
+    
+    border: 2px solid #E5E7EB;
+    border-radius: 5px;
+   padding: 6px 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.mood-reasons-checkbox:checked + div {
+    background-color: #E5E7EB;
+    border-color: #BE185D;
+   
+  }
+
+.message-container{
+    width: 100%;
+    border: 2px solid #E5E7EB;
+    color: #E5E7EB;
+    height: 100px;
+    margin-top: 3%;
+    border-radius: 5px;
+    display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-container:focus{
+    border: 2px solid #E5E7EB;
+}
+

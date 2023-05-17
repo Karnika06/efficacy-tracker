@@ -1,0 +1,101 @@
+.task-card {
+    display: flex;
+       
+}
+
+.task-card .task-link {
+    display: flex;
+    width: 100%
+}
+
+.task-card .task-link > * {
+    background-color: rgb(221,221,221);
+     margin: 2px;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center; 
+}
+
+.task-card .task-color {
+    width: 15px !important;
+    padding: 10px !important;
+    margin: 2px;
+}
+
+.task-card .status-display {
+    display: flex;
+    justify-content: center;
+}
+
+.task-card .priority-display {
+    justify-content: center;
+}
+
+.task-card .priority-display .star-container {
+    display: flex;
+    
+}
+
+.task-card .delete-block {
+    background-color: rgb(211,211,211);
+    width: 50px;
+    margin: 2px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.task-card .delete-block .delete-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    background-color: rgb(61,61,61);
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+}
+
+.task-card .level-display {
+    display: flex;
+    justify-content: center;
+}
+
+.task-card .startDate-display {
+    display: flex;
+    justify-content: center;
+}
+
+.task-card .dueDate-display {
+    display: flex;
+    justify-content: center;
+}
+
+.task-heading {
+   display: flex;
+    justify-content: center; 
+    
+}
+
+.task-heading > * {
+    margin: 2px;
+    padding: 20px;
+    width: 100%;
+    align-items: center;
+    background-color: rgb(221,221,221);
+    display: flex;
+    justify-content: center;
+}
+
+.task-heading .dummy1 {
+    width: 15px !important;
+    padding: 10px !important;
+    margin: 2px;
+}
+
+.task-heading .dummy2 {
+    background-color: rgb(211,211,211);
+    width: 105px;
+    margin: 2px;
+}

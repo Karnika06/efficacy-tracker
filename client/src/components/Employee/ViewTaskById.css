@@ -1,0 +1,16 @@
+.task-detail-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.task-detail {
+    
+    margin-bottom: 5%;
+    width: 50%;
+    
+}
+
+.task-detail .priority-display .star-container{
+    display: flex;
+    
+}

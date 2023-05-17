@@ -1,0 +1,85 @@
+.left-body-container {
+    background-color: #F3F4F6;
+    width: 100%;
+    border-radius: 15px;
+    margin-right: 1.5%;
+}
+
+.left-body-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1%;
+    font-size: 1.4rem;
+}
+
+
+
+
+.basic-info-container {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    /* width: 100%; */
+    padding: 4%;
+    flex-wrap: wrap;
+    margin: 20px 0 12px 0;
+}
+
+.basic-info {
+    /* width: 30%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%; */
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+}
+
+.label-box{
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input-box{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    background-color: #F3F4F6;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.input-box:focus {
+    border-color: #BE185D;
+    
+}
+
+.about-me-container {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    /* width: 100%; */
+    padding: 4%;
+    flex-wrap: wrap;
+    margin: 20px 0 12px 0;
+}
+
+.edit-icon{
+    border: 5px solid #ccc;
+    border-radius: 50px; 
+    width: 50px; 
+    height: 50px; 
+    position: absolute;
+    margin-top: 120px;
+    margin-left: 120px; 
+    color: #BE185D;
+    background-color: #ccc;
+    cursor: pointer;
+}

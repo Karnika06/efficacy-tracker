@@ -1,0 +1,37 @@
+.user-details {
+    width: 30%;
+    background-color: #1F2937;
+    border-radius: 15px;
+    color: aliceblue;
+}
+
+.user-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    padding: 15% 15% 0% 15%;
+}
+
+.user-about-details {
+    
+    padding: 6%;
+}
+
+.user-contact-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6%;
+}
+
+.user-icon-desc {
+    /* width: 70%; */
+}
+
+.user-icon-description {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
