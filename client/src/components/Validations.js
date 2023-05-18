@@ -17,7 +17,7 @@ export const SignupValidations = Yup.object().shape({
     name: Yup.string()
     .required("Name is required")
     .matches(/^[A-Za-z\s]+$/, "Name should only contain alphabets")
-    .max(15, "Name should not exceed 15 characters")
+    .max(50, "Name should not exceed 15 characters")
     .min(2, "Name should be at least 2 characters long"),
         email: Yup.string()
           .email("Invalid email address")

@@ -1,6 +1,6 @@
 const otpGenerator = require("otp-generator");
 const express = require("express");
-const localVariables = require("../middleware/auth");
+const {localVariables} = require("../middleware/auth");
 const verifyEmail = require("../middleware/auth");
 const router = express.Router();
 const nodemailer = require("nodemailer");

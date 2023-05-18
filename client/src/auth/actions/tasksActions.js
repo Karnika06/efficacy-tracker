@@ -4,7 +4,7 @@ import {sessionService} from 'redux-react-session'
 // user actions - signup - login - logout
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
-
+  const baseURL = process.env.REACT_APP_SERVER_DOMAIN
 
 export const addTask = (credentials, setFieldError, setSubmitting, navigate) => {
 
@@ -22,7 +22,7 @@ export const addTask = (credentials, setFieldError, setSubmitting, navigate) => 
         task_desc
       } = credentials;
 
-    axios.post("http://localhost:3001/task/addtask", 
+    axios.post(`${baseURL}/task/addtask`, 
     {
         employee_id: employee_id,
         task_name: task_name,
@@ -71,7 +71,7 @@ export const getTask = (employee_id) => {
   return (dispatch) => {
 
     //console.log('inside gettask')
-  axios.get(`http://localhost:3001/task/gettask/${employee_id}`)
+  axios.get(`${baseURL}/task/gettask/${employee_id}`)
       .then((response) => {
         dispatch({
           type: 'ALL_TASKS_REQUEST',
@@ -109,7 +109,7 @@ export const updateTask = (credentials, setOpenPopup, setFieldError, setSubmitti
 
     //console.log(credentials);
 
-    axios.patch(`http://localhost:3001/task/updatetask/${task_id}`, {
+    axios.patch(`${baseURL}/task/updatetask/${task_id}`, {
       task_name: task_name,
       task_status: status,
       task_duration: duration,
@@ -160,7 +160,7 @@ export const updateTask = (credentials, setOpenPopup, setFieldError, setSubmitti
 //   return (dispatch) => {
 // console.log("inside actions")
 
-//   axios.get("http://localhost:3001/task/gettask")
+//   axios.get("${baseURL}/task/gettask")
 //       .then((response) => {
 //         dispatch({
 //           type: 'ALL_TASKS_REQUEST',

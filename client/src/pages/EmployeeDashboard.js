@@ -257,7 +257,7 @@ function EmployeeDashboard({getTask}) {
       link: '/employee/todaystasks',
       linkTo: 'All Todays Tasks',
       color: colors.light1,
-      subtitle: 'You have completed '+ completedTodaysTasks.length +' out of '+ todaysTasks.length +' todays tasks',
+      subtitle: 'You have completed '+ completedTodaysTasks?.length +' out of '+ todaysTasks?.length +' todays tasks',
       icon: <MdArrowBackIosNew style = {{rotate: '180deg'}}/>,
       textColor: colors.dark2
     }
@@ -269,7 +269,7 @@ function EmployeeDashboard({getTask}) {
       link: '/employee/previousTasks',
       linkTo: 'All Tasks',
       color: colors.light1,
-      subtitle: 'You have completed '+ completedPreviousTasks.length +' out of '+ tasksData.length +' previous tasks',
+      subtitle: 'You have completed '+ completedPreviousTasks?.length +' out of '+ tasksData?.length +' previous tasks',
       icon: <MdArrowBackIosNew style = {{rotate: '180deg'}}/>,
       textColor: colors.dark2
       

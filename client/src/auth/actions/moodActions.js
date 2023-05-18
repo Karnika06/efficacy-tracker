@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
+const baseURL = process.env.REACT_APP_SERVER_DOMAIN
 
 
 export const addMoodData = (credentials, setFieldError, setSubmitting) => {
@@ -10,7 +11,7 @@ export const addMoodData = (credentials, setFieldError, setSubmitting) => {
   let {employee_id, employee_mood, mood_reason, message} = credentials;
   console.log(credentials)
 
-    axios.post("http://localhost:3001/mood/addMood-data", 
+    axios.post(`${baseURL}/mood/addMood-data`, 
     {
        employee_id: employee_id,
      employee_mood: employee_mood, 

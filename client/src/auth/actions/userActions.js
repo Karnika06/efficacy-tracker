@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import jwt_decode from "jwt-decode";
 import { number } from "yup";
 import { getTask } from "./tasksActions";
+
+const baseURL = process.env.REACT_APP_SERVER_DOMAIN
 // user actions - signup - login - logout
 
 //axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN
@@ -29,7 +31,7 @@ export const loginUser = (
     let { email, password } = credentials;
 
     axios
-      .post(`http://localhost:3001/user/login`, {
+      .post(`${baseURL}/user/login`, {
         email: email,
         password: password,
       })
@@ -161,7 +163,7 @@ export const signupUser = (
     
 
     axios
-      .post("http://localhost:3001/user/signup", {
+      .post(`${baseURL}/user/signup`, {
         name: name,
         email: email,
         contact: contact,
@@ -198,7 +200,7 @@ export const signupUser = (
           const { email, password } = credentials;
 
           axios
-    .post("http://localhost:3001/user/sendVerificationMail", {
+    .post(`${baseURL}/user/sendVerificationMail`, {
       name: name,
       email: email,
       contact: contact,
@@ -291,7 +293,7 @@ export const logoutUser = (navigate) => {
 export const getAllUsers = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3001/user/getallusers`)
+      .get(`${baseURL}/user/getallusers`)
       .then((response) => {
         dispatch({
           type: "ALL_EMPLOYEES_REQUEST",
@@ -315,7 +317,7 @@ export const getAllUsers = () => {
 export const getUserById = (id) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3001/user/getuserbyid/${id}`)
+      .get(`${baseURL}/user/getuserbyid/${id}`)
       .then((response) => {
         dispatch({
           type: "LOAD_USER_REQUEST",
@@ -340,7 +342,7 @@ export const deleteUser = (id, navigate) => {
   console.log(id, " deleted");
 
   axios
-    .post(`http://localhost:3001/user/deleteuser`, {
+    .post(`${baseURL}/user/deleteuser`, {
       id,
     })
     .then((response) => {
@@ -414,7 +416,7 @@ export const updateUser = (credentials, setFieldError, setSubmitting) => {
 
     axios
       .put(
-        `http://localhost:3001/user/addotheruserdetails`,
+        `${baseURL}/user/addotheruserdetails`,
         {
           job_role: job_role,
           team: team,
@@ -473,16 +475,16 @@ export const updateUser = (credentials, setFieldError, setSubmitting) => {
 /**OTP generator function */
 export const generateOTP = ({ email }, navigate) => {
   try {
-    //const {data : { code }, status } = axios.get('http://localhost:3001/otp/generateOTP', { params : {email}})
+    //const {data : { code }, status } = axios.get('${baseURL}/otp/generateOTP', { params : {email}})
     axios
-      .get("http://localhost:3001/otp/generateOTP", { params: { email } })
+      .get(`${baseURL}/otp/generateOTP`, { params: { email } })
       .then( (res) => {
 
         const {data: {code}, status} = res
        // send email with the OTP
         if(status === 201){
           let text = `Your password recovery OTP is ${code}. Verify and recover your password.`;
-          axios.post('http://localhost:3001/otp/registerMail', {email, text, subject : "Password Recovery OTP"})
+          axios.post(`${baseURL}/otp/registerMail`, {email, text, subject : "Password Recovery OTP"})
 
           toast.success("OTP is sent to your email.", {
             position: "top-center",
@@ -533,7 +535,7 @@ export const generateOTP = ({ email }, navigate) => {
 /** verify OTP */
 export const verifyOTP = ({ otpCode }, email, navigate) => {
   try {
-    axios.get("http://localhost:3001/otp/verifyOTP", {
+    axios.get(`${baseURL}/otp/verifyOTP`, {
       params: { email, otpCode },
     }).then((res) => {
       //console.log(res);
@@ -586,7 +588,7 @@ export const verifyOTP = ({ otpCode }, email, navigate) => {
 export const resetPassword = (email, password, navigate, setFieldError , setSubmitting) => {
   try {
     axios.put(
-      "http://localhost:3001/user/resetpassword",
+      `${baseURL}/user/resetpassword`,
       { email: email, newPassword : password }
     ).then((res) => {
       //console.log(res)

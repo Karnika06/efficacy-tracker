@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const db = require("../config/db");
-const ENV = require("../config")
+const ENV = require("../config");
 
 /* authorization middleware */
 const Auth = async (req, res, next) => {
@@ -18,14 +18,11 @@ const Auth = async (req, res, next) => {
     next();
   } catch (error) {
     //console.log(error);
-    res.json({status: 'FAILED', message: "Authentication Failed" });
+    res.json({ status: "FAILED", message: "Authentication Failed" });
   }
 };
 
-
-
 const localVariables = async (req, res, next) => {
- 
   req.app.locals = {
     OTP: null,
     resetSession: false,
@@ -33,4 +30,4 @@ const localVariables = async (req, res, next) => {
   next();
 };
 
-module.exports =  (Auth, localVariables) ;
+module.exports = { Auth, localVariables };

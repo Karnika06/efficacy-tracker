@@ -29,7 +29,7 @@ app.use(bodyParser.json())
 
 
 //config
-dotenv.config({ path: "server/.env" });
+//dotenv.config({ path: "server/.env" });
 
 // session - cookie
 app.use(cookieParser())

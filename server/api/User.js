@@ -4,13 +4,14 @@ const dotenv = require("dotenv");
 const db = require("../config/db");
 const bcrypt = require("bcrypt");
 
-const Auth = require("../middleware/auth");
+const { Auth, localVariables } = require("../middleware/auth");
 //const verifyUser = require("../middleware/auth");
 const sendingMail = require("../api/sendEmail");
 const crypto = require("crypto");
 const VerifyUser = require("../middleware/verify")
 
 const ENV = require("../config");
+const baseURL = 'http://localhost:3001'
 
 //jwt token
 const jwt = require("jsonwebtoken");

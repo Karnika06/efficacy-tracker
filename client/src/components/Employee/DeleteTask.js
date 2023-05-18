@@ -1,57 +1,68 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import { connect } from 'react-redux';
-import ConfirmDialog from '../Shared/ConfirmDialog';
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
-import { getTask } from '../../auth/actions/tasksActions';
+import axios from "axios";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import ConfirmDialog from "../Shared/ConfirmDialog";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getTask } from "../../auth/actions/tasksActions";
 
+const baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
-function DeleteTask({id}) {
-
-  const [confirmDialog, setConfirmDialog] = useState({isOpen: false, title: '', subTitle: ''});
+function DeleteTask({ id }) {
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: "",
+    subTitle: "",
+  });
 
   const deleteTask = () => {
-    console.log('deleted')
-    setConfirmDialog({...confirmDialog, isOpen: false})
+    console.log("deleted");
+    setConfirmDialog({ ...confirmDialog, isOpen: false });
 
-    axios.delete(`http://localhost:3001/task/deletetask/${id}`)
+    axios
+      .delete(`${baseURL}/task/deletetask/${id}`)
       .then((response) => {
-        
-          console.log(response)
-          toast.success('Task Deleted successfully', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            })
-            
-
-      }).catch(err => {
-        console.log(err)
-        
-      })   
-
-
-  }
+        console.log(response);
+        toast.success("Task Deleted successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <div className = "delete-block">
-      <div className="delete-icon" onClick={ () => setConfirmDialog({
-              isOpen: true,
-              title: 'Are you sure to delete this user?',
-              subTitle: `You can't undo this operation`,
-              onConfirm: () => { deleteTask() }
-            })} style={{cursor: 'pointer'}}>
-      ⨯
+    <div className="delete-block">
+      <div
+        className="delete-icon"
+        onClick={() =>
+          setConfirmDialog({
+            isOpen: true,
+            title: "Are you sure to delete this user?",
+            subTitle: `You can't undo this operation`,
+            onConfirm: () => {
+              deleteTask();
+            },
+          })
+        }
+        style={{ cursor: "pointer" }}
+      >
+        ⨯
       </div>
-      <ConfirmDialog confirmDialog= {confirmDialog} setConfirmDialog={setConfirmDialog}/>
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
     </div>
-  )
+  );
 }
 
-export default (DeleteTask);
+export default DeleteTask;
