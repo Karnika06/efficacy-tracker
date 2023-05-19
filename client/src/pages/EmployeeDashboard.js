@@ -51,7 +51,7 @@ function EmployeeDashboard({getTask}) {
 
   const employee_id = useSelector((state) => state.user.User.id);
 
-  const todaysTasks = tasksData.filter(
+  const todaysTasks = tasksData?.filter(
     (taskData) =>
       new Date(taskData.created_at).toJSON().slice(0, 10) ==
       new Date().toJSON().slice(0, 10)
@@ -79,8 +79,8 @@ function EmployeeDashboard({getTask}) {
     Hard: 3,
   };
 
-  const completedPreviousTasks = taskData.filter(task => task.task_status === 'Done');
-  const completedTodaysTasks = todaysTasks.filter(task => task.task_status === 'Done');
+  const completedPreviousTasks = taskData?.filter(task => task.task_status === 'Done');
+  const completedTodaysTasks = todaysTasks?.filter(task => task.task_status === 'Done');
 
   function handleDuration(startTime, endTime) {
     //event.preventDefault();
@@ -142,7 +142,7 @@ function EmployeeDashboard({getTask}) {
     return {
       
       date,
-      efficiency: totalEfficiency / tasks.length, // calculate the average efficiency for that date
+      efficiency: totalEfficiency / tasks?.length, // calculate the average efficiency for that date
     };
   });
 

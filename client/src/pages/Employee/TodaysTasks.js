@@ -23,51 +23,17 @@ function TodaysTasks({ getTask }) {
     // console.log(todaysTasks);
   }, []);
 
-  const todaysTasks = tasksData.filter(
+  const todaysTasks = tasksData?.filter(
     (taskData) =>
       new Date(taskData.created_at).toJSON().slice(0, 10) ==
       new Date().toJSON().slice(0, 10)
   );
 
-  const taskData = [
-    {
-      title: "Make a login form",
-      status: "Working on it",
-      priority: "4",
-      level: "Medium",
-      dueDate: "25-01-2023",
-      startDate: "25-01-2023",
-    },
-    {
-      title: "Make a login form",
-      status: "Done",
-      priority: "2",
-      level: "Hard",
-      dueDate: "25-01-2023",
-      startDate: "25-01-2023",
-    },
-    {
-      title: "Make a login form",
-      status: "Stuck",
-      priority: "",
-      level: "Easy",
-      dueDate: "25-01-2023",
-      startDate: "25-01-2023",
-    },
-    {
-      title: "Make a login form",
-      status: "Working on it",
-      priority: "5",
-      level: "Medium",
-      dueDate: "25-01-2023",
-      startDate: "25-01-2023",
-    },
-  ];
   return (
     <div>
       {/* <StyledFormArea> */}
 
-      {tasksData.length == 0 || todaysTasks == 0 ? null : (
+      {tasksData?.length == 0 || todaysTasks == 0 ? null : (
         <>
           <h2
             style={{
@@ -105,7 +71,7 @@ function TodaysTasks({ getTask }) {
         </>
       )}
       <div className="task-container">
-        {tasksData.length ? (
+        {tasksData?.length ? (
           todaysTasks.length > 0 ? (
             todaysTasks.map((tasks, key) => <TaskCard emp = {employee_id} task={tasks} />)
           ) : (
