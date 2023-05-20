@@ -32,7 +32,7 @@ function PreviousTasks({ getTask }) {
     <div>
       {/* <StyledFormArea> */}
 
-      {tasksData?.length == 0 ? null : (
+      {tasksData?.length > 0 ? (
         <>
           <h2
             style={{
@@ -68,7 +68,7 @@ function PreviousTasks({ getTask }) {
             <div className="dummy2"></div>
           </div>
         </>
-      )}
+      ) : null}
       <div className="task-container">
         {tasksData?.length ? (
           tasksData &&

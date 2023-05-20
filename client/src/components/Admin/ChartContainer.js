@@ -10,32 +10,32 @@ export default function ChartContainer({ tasks }) {
   const {isMobile, isTablet} = useViewport()
   //const tasksData = useSelector((state) => state.tasks.tasks);
 
-  const difficultyLevel = tasks.map(({ task_level }) => task_level);
+  const difficultyLevel = tasks?.map(({ task_level }) => task_level);
 
-  const countEasy = difficultyLevel.filter((item) => item === "Easy").length;
-  const countMedium = difficultyLevel.filter(
+  const countEasy = difficultyLevel?.filter((item) => item === "Easy").length;
+  const countMedium = difficultyLevel?.filter(
     (item) => item === "Medium"
   ).length;
-  const countHard = difficultyLevel.filter((item) => item === "Hard").length;
+  const countHard = difficultyLevel?.filter((item) => item === "Hard").length;
 
-  const progressBar = tasks.map(({ task_status }) => task_status);
+  const progressBar = tasks?.map(({ task_status }) => task_status);
 
-  const countCompleted = progressBar.filter((item) => item === "Done").length;
-  const countStuck = progressBar.filter((item) => item === "Stuck").length;
-  const countWorking = progressBar.filter(
+  const countCompleted = progressBar?.filter((item) => item === "Done").length;
+  const countStuck = progressBar?.filter((item) => item === "Stuck").length;
+  const countWorking = progressBar?.filter(
     (item) => item === "Working on it"
   ).length;
-  const countNotStart = progressBar.filter(
+  const countNotStart = progressBar?.filter(
     (item) => item === "Not started"
   ).length;
 
   const percentCompleted = Math.round(
-    (countCompleted / progressBar.length) * 100
+    (countCompleted / progressBar?.length) * 100
   );
-  const percentStuck = Math.round((countStuck / progressBar.length) * 100);
-  const percentWorking = Math.round((countWorking / progressBar.length) * 100);
+  const percentStuck = Math.round((countStuck / progressBar?.length) * 100);
+  const percentWorking = Math.round((countWorking / progressBar?.length) * 100);
   const percentNotStart = Math.round(
-    (countNotStart / progressBar.length) * 100
+    (countNotStart / progressBar?.length) * 100
   );
 
   //useEffect(() => {
@@ -98,7 +98,7 @@ export default function ChartContainer({ tasks }) {
           }}
         >
           <Doughnut data={data} />
-          {tasks.length == 0 && <h3 style={{textAlign: 'center'}}>No Tasks added</h3>}
+          {tasks?.length == 0 && <h3 style={{textAlign: 'center'}}>No Tasks added</h3>}
         </div>
       </div>
       <div style={ProgressStyling}>

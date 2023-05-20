@@ -32,8 +32,9 @@ function TodaysTasks({ getTask }) {
   return (
     <div>
       {/* <StyledFormArea> */}
+    
 
-      {tasksData?.length == 0 || todaysTasks == 0 ? null : (
+      {tasksData?.length > 0 ? (
         <>
           <h2
             style={{
@@ -69,10 +70,10 @@ function TodaysTasks({ getTask }) {
             <div className="dummy2"></div>
           </div>
         </>
-      )}
+      ) : null}
       <div className="task-container">
         {tasksData?.length ? (
-          todaysTasks.length > 0 ? (
+          todaysTasks?.length > 0 ? (
             todaysTasks.map((tasks, key) => <TaskCard emp = {employee_id} task={tasks} />)
           ) : (
             <NoTask />

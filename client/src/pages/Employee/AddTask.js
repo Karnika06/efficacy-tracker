@@ -83,6 +83,7 @@ function AddTask({ addTask }) {
         validationSchema = {AddTaskValidations}
 
         onSubmit={(values, { setSubmitting, setFieldError }) => {
+          console.log(userData)
           values.employee_id = userData.id;
           console.log(values);
           values.duration = handleDuration(values.startDate, values.dueDate);

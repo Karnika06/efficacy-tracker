@@ -23,7 +23,6 @@ router.post("/addtask", (req, res) => {
     startDate,
     task_desc
   } = req.body;
-
   db.query('SELECT COUNT(*) AS task_count FROM `efficacytracker`.`tasks` WHERE DATE(created_at) = CURDATE()',(err,response) => {
     if(err) {
       
@@ -33,6 +32,7 @@ router.post("/addtask", (req, res) => {
       });
     } else {
       task_count = response[0].task_count
+      console.log(task_count)
       if(task_count < 10) {
         db.query(
           "INSERT INTO efficacytracker.tasks (task_name,employee_id,task_status, task_duration, task_priority, task_level, dueDate, startDate, task_desc) VALUES (?,?,?,?,?,?,?,?,?)",
@@ -89,6 +89,7 @@ db.query(
       });
     } else {
       //res.send("Data inserted")
+      console.log(resp)
       res.json({
         status: "SUCCESS",
         message: "Got all data",

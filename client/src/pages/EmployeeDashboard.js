@@ -108,7 +108,7 @@ function EmployeeDashboard({getTask}) {
     return (Math.sqrt(priority) * 1/timeTaken * Math.log(1 + difficultyValue));
   };
 
-  const CalcEfficiency = tasksData.reduce((acc, task) => {
+  const CalcEfficiency = tasksData?.reduce((acc, task) => {
     const taskEfficiency = efficiency(
       task.task_duration,
       task.task_status,
@@ -122,7 +122,7 @@ function EmployeeDashboard({getTask}) {
   }, 0);
 
   // group the tasks by date
-  const groupedTasks = tasksData.reduce((acc, task) => {
+  const groupedTasks = tasksData?.reduce((acc, task) => {
     const date = new Date(task.created_at).toISOString().slice(0, 10); // get the date string, e.g. "Tue Mar 22 2022"
     if (!acc[date]) {
       acc[date] = [];
@@ -132,19 +132,29 @@ function EmployeeDashboard({getTask}) {
   }, {});
 
   // calculate the total efficiency for each date
-  const efficiencyByDate = Object.entries(groupedTasks).map(([date, tasks]) => {
-    const totalEfficiency = tasks.reduce(
-      (acc, task) =>
-        acc + efficiency(task.task_duration, task.task_status, task.task_level, task.task_priority, task.startDate, task.dueDate),
-      0
-    );
-    
-    return {
-      
-      date,
-      efficiency: totalEfficiency / tasks?.length, // calculate the average efficiency for that date
-    };
-  });
+  const efficiencyByDate = groupedTasks
+  ? Object.entries(groupedTasks).map(([date, tasks]) => {
+      const totalEfficiency = tasks?.reduce(
+        (acc, task) =>
+          acc +
+          efficiency(
+            task.task_duration,
+            task.task_status,
+            task.task_level,
+            task.task_priority,
+            task.startDate,
+            task.dueDate
+          ),
+        0
+      );
+
+      return {
+        date,
+        efficiency: totalEfficiency / tasks.length, // calculate the average efficiency for that date
+      };
+    })
+  : [];
+
 
   const data = {
     labels: efficiencyByDate.map((date) => date.date),
