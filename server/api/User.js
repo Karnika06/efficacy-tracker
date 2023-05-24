@@ -89,9 +89,10 @@ router.post("/sendVerificationMail", async (req, res) => {
   var status, msg;
 
   req.body.subject = "Email Verification";
+  console.log(req.headers)
   const randomToken = crypto.randomBytes(32).toString("hex");
   req.body.text =
-    'Please <a href="http://localhost:3001/mail-verification?token=' +
+    'Please <a href="http://'+req.headers.host+'/mail-verification?token=' +
     randomToken +
     '"> verify</a> your mail by clicking on verify.';
 

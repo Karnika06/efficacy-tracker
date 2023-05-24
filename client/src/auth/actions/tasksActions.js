@@ -121,7 +121,7 @@ export const updateTask = (credentials, setOpenPopup, setFieldError, setSubmitti
     })
       .then((response) => {
         console.log(response);
-        setOpenPopup(false)
+      
         toast.success('Task Updated successfully', {
           position: "top-right",
           autoClose: 5000,

@@ -10,7 +10,7 @@ module.exports = {
 
   HOST_DB: "localhost",
 
-  PASSWORD_DB: "digimon321",
+  PASSWORD_DB: "Karnika126@",
 
   DATABASE_DB: "efficacytracker",
 
