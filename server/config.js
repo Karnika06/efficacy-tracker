@@ -16,5 +16,7 @@ module.exports = {
 
   SALT_ROUNDS: 10,
 
-  SERVER_PORT: 3001
+  SERVER_PORT: 3001,
+
+  SERVER_ADDRESS: '172.27.22.80'
 };

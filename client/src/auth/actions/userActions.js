@@ -47,7 +47,7 @@ export const loginUser = (
           const { message } = data;
           setSubmitting(false)
           if(data.error){
-            toast.error(data.error, {
+            toast.error(data.message, {
               position: "top-center",
               autoClose: 5000,
               hideProgressBar: false,

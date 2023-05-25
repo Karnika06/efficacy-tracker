@@ -83,7 +83,7 @@ export const getTask = (employee_id) => {
             payload: todayTasks})
 
       }).catch(err => {
-        console.log(err)
+        //console.log(err)
         dispatch({
           type: 'ALL_TASKS_FAIL',
           payload: err.response.data.message,
@@ -120,7 +120,7 @@ export const updateTask = (credentials, setOpenPopup, setFieldError, setSubmitti
       task_desc: task_desc,
     })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
       
         toast.success('Task Updated successfully', {
           position: "top-right",
