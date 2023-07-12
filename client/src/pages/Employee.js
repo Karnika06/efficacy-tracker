@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Router, Routes } from 'react-router-dom'
 
 import Sidebar from '../components/Shared/Sidebar'
@@ -17,11 +17,14 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import {BiLogOut} from "react-icons/bi"
 import {MdSpaceDashboard} from "react-icons/md"
 import About from './Employee/About'
+import Popup from '../components/Employee/Popup'
 
 
 
 
 export default function Employee() {
+
+  const [openPopup, setOpenPopup] = useState(false);
 
   const list = [
     {
@@ -77,6 +80,11 @@ export default function Employee() {
         
         {/* </div> */}
         </Sidebar>
+        {/* <Popup
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+        title= "Mood Tracker"
+      ></Popup> */}
     </div>
   )
 }

@@ -41,9 +41,12 @@ Chart.register(
 
 function EmployeeDashboard({getTask}) {
 
+  const moodEntry = useSelector((state) => state.moodEntry.moodEntry);
+ //console.log('dash', moodEntry)
+
   const [startDate, setStartDate] = useState('2023-01-01')
   const [lastDate, setLastDate] = useState('2023-12-31')
-  const [openPopup, setOpenPopup] = useState(false);
+  const [openPopup, setOpenPopup] = useState(!moodEntry);
   const { isMobile, isTablet } = useViewport();
   
   const taskData = useSelector((state) => state.tasks.tasks);
@@ -293,7 +296,7 @@ function EmployeeDashboard({getTask}) {
         <div className="top-dashboard" style = {{display:  isMobile ? 'block' : 'flex', gap: '20px', marginBottom: '20px'}}>
           <WidgetTwo type={todayTasks} />
           <WidgetTwo type={previousTasks} />
-          <WidgetTwo type={mood} handleClick = {() => setOpenPopup(!openPopup)}/>
+          {/* <WidgetTwo type={mood} handleClick = {() => setOpenPopup(!openPopup)}/> */}
           
         </div>
         <div style={GraphStyling}>
@@ -305,8 +308,8 @@ function EmployeeDashboard({getTask}) {
         <ChartContainer tasks = {tasksData}/>
       </div>
       <Popup
-        openPopup={openPopup}
-        setOpenPopup={setOpenPopup}
+        openPopup={!moodEntry}
+        setOpenPopup={!moodEntry}
         title= "Mood Tracker"
       >
         <MoodForm/>

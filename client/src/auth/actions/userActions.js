@@ -7,7 +7,7 @@ import jwt_decode from "jwt-decode";
 import { number } from "yup";
 import { getTask } from "./tasksActions";
 
-const baseURL = process.env.REACT_APP_SERVER_DOMAIN
+const baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 // user actions - signup - login - logout
 
 //axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN
@@ -45,8 +45,8 @@ export const loginUser = (
 
         if (data.status === "FAILED") {
           const { message } = data;
-          setSubmitting(false)
-          if(data.error){
+          setSubmitting(false);
+          if (data.error) {
             toast.error(data.message, {
               position: "top-center",
               autoClose: 5000,
@@ -60,9 +60,9 @@ export const loginUser = (
           }
 
           //checking for specific errors
-          if (message.includes("credentials")) {
-            setFieldError("email", message);
-            setFieldError("password", message);
+          if (message.includes("email")) {
+            // setFieldError("email", "This email is not available in our database.");
+            // setFieldError("password", message);
             toast.error(message, {
               position: "top-center",
               autoClose: 5000,
@@ -73,10 +73,9 @@ export const loginUser = (
               progress: undefined,
               theme: "colored",
             });
-  
           } else if (message.includes("password")) {
             setFieldError("password", message);
-            toast.error('Invalid Password!', {
+            toast.error("Invalid Password!", {
               position: "bottom-right",
               autoClose: 5000,
               hideProgressBar: false,
@@ -104,8 +103,29 @@ export const loginUser = (
 
           dispatch({ type: "LOGIN_SUCCESS", payload: userData });
 
+          getTask(userData.id);
 
-         getTask(userData.id)
+          axios
+            .get(`${baseURL}/mood/check-mood-entry`, {
+              headers: {
+                id: userData.id,
+              },
+            })
+            .then((response) => {
+              dispatch({
+                type: "MOOD_ENTRY_REQUEST",
+              });
+
+              console.log(response);
+              const { hasEntry } = response.data;
+              console.log(hasEntry);
+
+              dispatch({ type: "MOOD_ENTRY_SUCCESS", payload: hasEntry });
+            })
+            .catch((err) => {
+              console.error(err);
+              dispatch({ type: "MOOD_ENTRY_FAIL", payload: "false" });
+            });
 
           if (userData.role === "admin") {
             navigate("/admin");
@@ -145,8 +165,18 @@ export const loginUser = (
         setSubmitting(false);
       })
       .catch((err) => {
+        toast.error("User doesn't exist", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         console.error(err);
-        dispatch({ type: "LOGIN_FAIL", payload: err.response.data.message });
+        dispatch({ type: "LOGIN_FAIL" });
       });
   };
 };
@@ -154,13 +184,11 @@ export const loginUser = (
 export const signupUser = (
   credentials,
   navigate,
-  setFieldError, 
+  setFieldError,
   setSubmitting
 ) => {
   return (dispatch) => {
     let { name, email, contact, password } = credentials;
-
-    
 
     axios
       .post(`${baseURL}/user/signup`, {
@@ -200,45 +228,46 @@ export const signupUser = (
           const { email, password } = credentials;
 
           axios
-    .post(`${baseURL}/user/sendVerificationMail`, {
-      name: name,
-      email: email,
-      contact: contact,
-      password: password,
-    }).then( (res) => {
-      console.log(res);
+            .post(`${baseURL}/user/sendVerificationMail`, {
+              name: name,
+              email: email,
+              contact: contact,
+              password: password,
+            })
+            .then((res) => {
+              console.log(res);
 
-      if(res.data.status == 'SUCCESS'){
+              if (res.data.status == "SUCCESS") {
+                toast.success(res.data.msg, {
+                  position: "bottom-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
 
-        toast.success(res.data.msg, {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+                navigate("/login");
+              } else {
+                toast.error(res.data.msg, {
+                  position: "bottom-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
+              }
 
-        navigate('/login')
-        
-      } else {
-        toast.error(res.data.msg, {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
-
-      setSubmitting(false)
-
-    }).catch((error) => { console.log(error)})
+              setSubmitting(false);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
 
           toast.success("Login with the right credentials", {
             position: "bottom-right",
@@ -252,7 +281,6 @@ export const signupUser = (
           });
 
           dispatch({ type: "REGISTER_SUCCESS", payload: data });
-
         }
       })
       .catch((err) => {
@@ -451,8 +479,6 @@ export const updateUser = (credentials, setFieldError, setSubmitting) => {
             progress: undefined,
             theme: "colored",
           });
-
-
         } else {
           toast.error(response.data.message, {
             position: "bottom-right",
@@ -478,13 +504,19 @@ export const generateOTP = ({ email }, navigate) => {
     //const {data : { code }, status } = axios.get('${baseURL}/otp/generateOTP', { params : {email}})
     axios
       .get(`${baseURL}/otp/generateOTP`, { params: { email } })
-      .then( (res) => {
-
-        const {data: {code}, status} = res
-       // send email with the OTP
-        if(status === 201){
+      .then((res) => {
+        const {
+          data: { code },
+          status,
+        } = res;
+        // send email with the OTP
+        if (status === 201) {
           let text = `Your password recovery OTP is ${code}. Verify and recover your password.`;
-          axios.post(`${baseURL}/otp/registerMail`, {email, text, subject : "Password Recovery OTP"})
+          axios.post(`${baseURL}/otp/registerMail`, {
+            email,
+            text,
+            subject: "Password Recovery OTP",
+          });
 
           toast.success("OTP is sent to your email.", {
             position: "top-center",
@@ -497,10 +529,10 @@ export const generateOTP = ({ email }, navigate) => {
             theme: "colored",
           });
 
-          navigate(`/otpVerify/${email}`)
+          navigate(`/otpVerify/${email}`);
         }
 
-        if(res.data.status === 'FAILED'){
+        if (res.data.status === "FAILED") {
           toast.error(res.data.message, {
             position: "top-center",
             autoClose: 5000,
@@ -513,20 +545,21 @@ export const generateOTP = ({ email }, navigate) => {
           });
         }
       })
-        .catch((err) => {console.log(err)
-          toast.error("Some error occurred!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });});
+      .catch((err) => {
+        console.log(err);
+        toast.error("Some error occurred!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
 
     //return code
-    
   } catch (error) {
     console.log(error);
   }
@@ -535,26 +568,42 @@ export const generateOTP = ({ email }, navigate) => {
 /** verify OTP */
 export const verifyOTP = ({ otpCode }, email, navigate) => {
   try {
-    axios.get(`${baseURL}/otp/verifyOTP`, {
-      params: { email, otpCode },
-    }).then((res) => {
-      //console.log(res);
-     
-      if(res.data.status === 'SUCCESS'){
-        toast.success(res.data.msg, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+    axios
+      .get(`${baseURL}/otp/verifyOTP`, {
+        params: { email, otpCode },
+      })
+      .then((res) => {
+        //console.log(res);
 
-        navigate(`/resetPassword/${email}`)
-      }else{
-        toast.error(res.data.error, {
+        if (res.data.status === "SUCCESS") {
+          toast.success(res.data.msg, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+
+          navigate(`/resetPassword/${email}`);
+        } else {
+          toast.error(res.data.error, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.error, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -564,38 +613,60 @@ export const verifyOTP = ({ otpCode }, email, navigate) => {
           progress: undefined,
           theme: "colored",
         });
-      }
-    }).catch((err) => {
-      console.log(err)
-      toast.error(err.response.data.error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
       });
-    })
-    
   } catch (error) {
     console.log(error);
   }
 };
 
 /** reset Password */
-export const resetPassword = (email, password, navigate, setFieldError , setSubmitting) => {
+export const resetPassword = (
+  email,
+  password,
+  navigate,
+  setFieldError,
+  setSubmitting
+) => {
   try {
-    axios.put(
-      `${baseURL}/user/resetpassword`,
-      { email: email, newPassword : password }
-    ).then((res) => {
-      //console.log(res)
-      //const {data, status} = res;
+    axios
+      .put(`${baseURL}/user/resetpassword`, {
+        email: email,
+        newPassword: password,
+      })
+      .then((res) => {
+        //console.log(res)
+        //const {data, status} = res;
 
-      if(res.data.status === 'SUCCESS'){
-        toast.success(res.data.message, {
+        if (res.data.status === "SUCCESS") {
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+
+          navigate(`/resetDone/`);
+          localStorage.clear();
+        } else {
+          toast.error(res.data.message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.error, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -605,37 +676,7 @@ export const resetPassword = (email, password, navigate, setFieldError , setSubm
           progress: undefined,
           theme: "colored",
         });
-
-        navigate(`/resetDone/`)
-        localStorage.clear();
-        
-      }else{
-        toast.error(res.data.message, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
-
-    }).catch((err) => {
-      console.log(err)
-      toast.error(err.response.data.error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
       });
-    })
-    
 
     //console.log('reset')
   } catch (error) {

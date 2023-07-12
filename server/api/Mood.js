@@ -6,6 +6,32 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const { check, validationResult } = require('express-validator');
 
+router.get('/check-mood-entry', (req, res) => {
+  
+  const employee_id = req.headers.id; // Assuming you have the authenticated employee's ID available in the request
+
+  // Query the database to check if the mood entry for the current day exists
+  db.query(
+    'SELECT * FROM mood WHERE employee_id = ? AND DATE(mood_date) = CURDATE()',
+    [employee_id],
+    (error, result) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      if (result.length > 0) {
+        // Mood entry exists for the current day
+        return res.json({ hasEntry: true });
+      } else {
+        // No mood entry found for the current day
+        return res.json({ hasEntry: false });
+      }
+    }
+  );
+});
+
+
 router.post(
     '/addMood-data',
     [

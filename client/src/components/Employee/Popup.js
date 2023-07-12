@@ -15,7 +15,7 @@ export default function Popup(props) {
             <div style = {{display: 'flex', justifyContent: 'space-between'}}>
 
             {title}
-            <AiFillCloseCircle onClick = {() => setOpenPopup(false)}/>
+           {title.includes("Mood") ? <div></div>: <AiFillCloseCircle onClick = {() => setOpenPopup(false)}/>}
             </div>
 
         </DialogTitle>

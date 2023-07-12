@@ -75,7 +75,7 @@ export default function SelectReason(props) {
                   newValue.splice(newValue.indexOf(option.value), 1);
                 }
                 {
-                  console.log(newValue);
+                  //console.log(newValue);
                 }
                 onChange(name, newValue);
               }}

@@ -12,6 +12,7 @@ import {BiLogOut } from "react-icons/bi";
 import CommentIcon from '@mui/icons-material/Comment';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
+import EmployeeView from './Admin/EmployeeView'
 
 export default function Admin() {
 

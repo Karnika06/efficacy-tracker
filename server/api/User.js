@@ -160,7 +160,7 @@ router.post("/login", VerifyUser, (req, res) => {
             } else {
               res.json({
                 status: "FAILED",
-                message: "Invalid credentials!",
+                message: "Invalid password!",
               });
             }
           });

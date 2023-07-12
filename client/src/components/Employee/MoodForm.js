@@ -30,7 +30,7 @@ function MoodForm({addMoodData}) {
         }
           onSubmit={(values, { setSubmitting, setFieldError }) => {
             values.employee_id = userData.id;
-            console.log(values);
+            //console.log(values);
             addMoodData(values)
           }}
         >
@@ -38,7 +38,7 @@ function MoodForm({addMoodData}) {
             <Form>
               <Moods
                 name="employee_mood"
-                label="How is your mood today?"
+                label="Before starting your day let us know your mood for today?"
                 value={values.employee_mood}
                 setFieldValue={setFieldValue}
                 errors={errors}
@@ -70,7 +70,7 @@ function MoodForm({addMoodData}) {
               />
 
               <ButtonGroup>
-                <StyledFormButton type="submit">Save</StyledFormButton>
+                <StyledFormButton type="submit">Submit</StyledFormButton>
               </ButtonGroup>
             </Form>
           )}
